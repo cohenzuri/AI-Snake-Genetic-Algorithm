@@ -30,9 +30,10 @@ class GeneticPlayer:
         self.population = [self.generate_brain(self.window_size**2, self.hidden_size, len(moves)) for _ in range(self.population_size)]
 
     def generate_brain(self, input_size, hidden_size, output_size):
-        hidden_layer_1 = np.array([[rand.uniform(-1,1) for _ in range(input_size + 1) for _  in range(hidden_size)]])
-        hidden_layer_2 = np.array([[rand.uniform(-1, 1) for _ in range(hidden_size + 1) for _ in range(hidden_size)]])
-        output_layer = np.array([[rand.uniform(-1, 1) for _ in range(hidden_size + 1) for _ in range(output_size)]])
+
+        hidden_layer_1 = np.array([[rand.uniform(-1, 1) for _ in range(input_size + 1)] for _ in range(hidden_size)])
+        hidden_layer_2 = np.array([[rand.uniform(-1, 1) for _ in range(hidden_size + 1)] for _ in range(hidden_size)])
+        output_layer = np.array([[rand.uniform(-1, 1) for _ in range(hidden_size + 1)] for _ in range(output_size)])
 
         return[hidden_layer_1, hidden_layer_2, output_layer]
 
@@ -44,6 +45,14 @@ class GeneticPlayer:
         output_layer = self.current_brain[2]
 
         # Forword prop
+
+        #####################
+        test_2 = hidden_layer_1.shape[0]
+        #test_1 = math.tanh(np.dot(input_vector, hidden_layer_1[0]))
+        test_3 = np.dot(input_vector, hidden_layer_1[0])
+        test_4 = math.tanh(test_3)
+        print('test' ,test_4)
+        #####################
 
         hidden_result_1 = np.array([math.tanh(np.dot(input_vector, hidden_layer_1[i])) for i in range(hidden_layer_1.shape[0])]+[1])
         hidden_result_2 = np.array([math.tanh(np.dot(hidden_result_1, hidden_layer_2[i])) for i in range(hidden_layer_2.shape[0])]+[1])
